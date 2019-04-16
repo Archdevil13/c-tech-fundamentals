@@ -1,0 +1,65 @@
+sing System;
+using System.Collections.Generic;
+using System.Linq;
+namespace ConsoleApp36
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] nameOfGifts = Console.ReadLine().Split();
+            string commands = Console.ReadLine();
+            List<string> giftsList = new List<string>();
+
+            for (int i = 0; i < nameOfGifts.Length; i++)
+            {
+                giftsList.Add(nameOfGifts[i]);
+            }
+            
+            while (commands != "No Money")
+            {
+               if (commands.Contains("OutOfStock"))
+               {
+                   string[] commandsSplit = commands.Split();
+                    string giftName = commandsSplit[1];
+                    for (int i = 0; i < giftsList.Count; i++)
+                    {
+                        if (giftsList[i].Contains(giftName))
+                        {
+                            giftsList[i] = "None";
+                        }
+                    }
+                    
+
+                }
+                if (commands.Contains("Required"))
+                {
+                    string[] commandSplit = commands.Split();
+                    string giftName = commandSplit[1];
+                    int giftIndex = int.Parse(commandSplit[2]);
+                    if (giftIndex < giftsList.Count)
+                   {
+                        giftsList.RemoveAt(giftIndex);
+                        giftsList.Insert(giftIndex, giftName);
+                    }
+                }
+               
+                if (commands.Contains("JustInCase"))
+                {
+                    string[] commandsSplit = commands.Split();
+                    string giftName = commandsSplit[1];
+                    giftsList.RemoveAt(giftsList.Count-1);
+                    giftsList.Insert(giftsList.Count, giftName);
+
+                }
+                commands = Console.ReadLine();
+            }
+            for (int i = 0; i < giftsList.Count; i++)
+            {
+                giftsList.RemoveAll(x => x == "None");
+            }
+
+            Console.WriteLine(string.Join(" ", giftsList));
+        }
+    }
+}
